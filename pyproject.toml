@@ -41,7 +41,7 @@ pre-commit = "^4.2.0"
 fastapi = "^0.115.4"
 uvicorn = "^0.32.0"
 python-multipart = "^0.0.16"
-starlette = "^0.37.1"
+# Removing explicit starlette dependency to let FastAPI handle it
 
 # Optional dependencies for documents
 mammoth = {version = "^1.9.0", optional = true}
