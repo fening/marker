@@ -1,1 +1,1 @@
-web: python -m marker.scripts.server
+web: python -m marker.scripts.server --host 0.0.0.0 --port $PORT
