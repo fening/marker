@@ -1,0 +1,21 @@
+[server]
+port = 8501
+enableCORS = false
+enableXsrfProtection = false
+maxUploadSize = 200
+maxMessageSize = 200
+headless = true
+enableWebsocketCompression = true
+fileWatcherType = "none"
+
+[browser]
+gatherUsageStats = false
+serverAddress = "0.0.0.0"
+serverPort = 8501
+
+[runner]
+magicEnabled = false
+fastReruns = false
+
+[theme]
+base = "light"

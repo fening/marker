@@ -3,6 +3,14 @@ import sys
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 os.environ["IN_STREAMLIT"] = "true"
 
+# Set longer timeout for production environment
+if os.environ.get("PORT"):
+    st_timeout = 180  # 3 minutes timeout for production
+    os.environ["STREAMLIT_SERVER_TIMEOUT"] = str(st_timeout)
+    os.environ["STREAMLIT_BROWSER_GATHER_USAGE_STATS"] = "false"
+    # Print startup message for logs
+    print(f"Starting Streamlit in production mode with {st_timeout}s timeout")
+
 from marker.settings import settings
 from marker.config.printer import CustomClickPrinter
 from streamlit.runtime.uploaded_file_manager import UploadedFile
@@ -71,7 +79,16 @@ def parse_args():
 
 @st.cache_resource()
 def load_models():
-    return create_model_dict()
+    # Print loading status for debugging deployment issues
+    print("Starting to load models...")
+    try:
+        models = create_model_dict()
+        print("Models loaded successfully!")
+        return models
+    except Exception as e:
+        print(f"Error loading models: {str(e)}")
+        # Return empty dict to prevent app from crashing completely
+        return {}
 
 
 def convert_pdf(fname: str, config_parser: ConfigParser) -> (str, Dict[str, Any], dict):

@@ -1,1 +1,1 @@
-web: python -m marker.scripts.run_streamlit_app -- --server.address 0.0.0.0 --server.port $PORT
+web: cd marker/scripts && streamlit run streamlit_app.py --server.address=0.0.0.0 --server.port=$PORT --server.headless=true --server.enableCORS=false --server.enableWebsocketCompression=true --server.fileWatcherType=none
