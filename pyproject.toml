@@ -41,7 +41,9 @@ pre-commit = "^4.2.0"
 fastapi = "^0.115.4"
 uvicorn = "^0.32.0"
 python-multipart = "^0.0.16"
-# Removing explicit starlette dependency to let FastAPI handle it
+# Streamlit dependency for GUI
+streamlit = "^1.37.1"
+pypdfium2 = "*"
 
 # Optional dependencies for documents
 mammoth = {version = "^1.9.0", optional = true}
@@ -54,8 +56,8 @@ openai = "^1.65.2"
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
 datasets = "^2.21.0"
-streamlit = "^1.37.1"
 # Removed fastapi, uvicorn, python-multipart as they were moved to main dependencies
+# Removed streamlit since it's now in main dependencies
 pytest = "^8.3.3"
 pytest-mock = "^3.14.0"
 apted = "1.0.3"
