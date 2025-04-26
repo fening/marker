@@ -1,1 +1,1 @@
-web: cd marker/scripts && streamlit run streamlit_app.py --server.address=0.0.0.0 --server.port=$PORT --server.headless=true --server.enableCORS=false --server.enableWebsocketCompression=true --server.fileWatcherType=none
+web: cd marker/scripts && streamlit run streamlit_app.py --server.address=0.0.0.0 --server.port=8080 --server.headless=true --server.enableCORS=false --server.enableWebsocketCompression=true --server.fileWatcherType=none
