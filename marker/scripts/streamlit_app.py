@@ -23,6 +23,7 @@ import string
 import tempfile
 from typing import Any, Dict
 import click
+import os.path
 
 import pypdfium2
 import streamlit as st
@@ -34,6 +35,13 @@ from marker.models import create_model_dict
 from marker.config.parser import ConfigParser
 from marker.output import text_from_rendered
 from marker.schema import BlockTypes
+
+# Function to create a download link for files
+def get_download_link(content, filename, link_text):
+    """Generate a download link for text content"""
+    b64 = base64.b64encode(content.encode()).decode()
+    href = f'<a href="data:file/txt;base64,{b64}" download="{filename}">{link_text}</a>'
+    return href
 
 COLORS = [
     "#4e79a7",
@@ -254,10 +262,55 @@ with col2:
     if output_format == "markdown":
         text = markdown_insert_images(text, images)
         st.markdown(text, unsafe_allow_html=True)
+        
+        # Create a download button for markdown
+        original_filename = os.path.splitext(in_file.name)[0]
+        download_filename = f"{original_filename}.md"
+        
+        # Option 1: Using Streamlit's download_button
+        st.download_button(
+            label="Download Markdown",
+            data=text,
+            file_name=download_filename,
+            mime="text/markdown",
+        )
+        
+        # Option 2: Alternative HTML download link if needed
+        st.markdown(
+            get_download_link(text, download_filename, "Download as Markdown (Alternative Link)"),
+            unsafe_allow_html=True,
+        )
+        
     elif output_format == "json":
         st.json(text)
+        
+        # Add JSON download option
+        original_filename = os.path.splitext(in_file.name)[0]
+        download_filename = f"{original_filename}.json"
+        
+        # Convert to JSON string if it's not already a string
+        json_text = text if isinstance(text, str) else json.dumps(text, indent=2)
+        
+        st.download_button(
+            label="Download JSON",
+            data=json_text,
+            file_name=download_filename,
+            mime="application/json",
+        )
+        
     elif output_format == "html":
         st.html(text)
+        
+        # Add HTML download option
+        original_filename = os.path.splitext(in_file.name)[0]
+        download_filename = f"{original_filename}.html"
+        
+        st.download_button(
+            label="Download HTML",
+            data=text,
+            file_name=download_filename,
+            mime="text/html",
+        )
 
 if output_format == "json" and show_blocks:
     with image_placeholder:
