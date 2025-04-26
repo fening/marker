@@ -195,15 +195,6 @@ col1, col2 = st.columns([.5, .5])
 model_dict = load_models()
 cli_options = parse_args()
 
-
-st.markdown("""
-# Marker Demo
-
-This app will let you try marker, a PDF or image -> Markdown, HTML, JSON converter. It works with any language, and extracts images, tables, equations, etc.
-
-Find the project [here](https://github.com/VikParuchuri/marker).
-""")
-
 in_file: UploadedFile = st.sidebar.file_uploader("PDF, document, or image file:", type=["pdf", "png", "jpg", "jpeg", "gif", "pptx", "docx", "xlsx", "html", "epub"])
 
 if in_file is None:
